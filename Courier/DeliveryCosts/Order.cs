@@ -8,5 +8,7 @@ namespace DeliveryCosts
         public List<Parcel> ParcelList { get; set; }
 
         public decimal TotalCost { get; set; }
+
+        public decimal TotalCostWithSpeedyShipping { get; set; }
     }
 }

@@ -86,5 +86,59 @@ namespace DeliveryCostsTests
             //Assert
             Assert.AreEqual(3, targetParcel.Cost);
         }
+
+        [Test]
+        public void CalculateOrderCostTestWithoutSpeedyShippingTest()
+        {
+            //Arrange
+            List<Parcel> parcels = new List<Parcel>();
+            parcels.Add(new Parcel
+            {
+                Height = 6,
+                Length = 7,
+                Width = 9
+            });
+            parcels.Add(new Parcel
+            {
+                Height = 10,
+                Length = 30,
+                Width = 40
+            });
+
+
+            //Act
+            var cost = new DeliveryCostsCalculation();
+            var order = cost.CalculateOrderCost(parcels);
+
+            //Assert
+            Assert.AreEqual(11, order.TotalCost);
+        }
+
+        [Test]
+        public void CalculateOrderCostTestWithSpeedyShippingTest()
+        {
+            //Arrange
+            List<Parcel> parcels = new List<Parcel>();
+            parcels.Add(new Parcel
+            {
+                Height = 6,
+                Length = 7,
+                Width = 9
+            });
+            parcels.Add(new Parcel
+            {
+                Height = 10,
+                Length = 30,
+                Width = 40
+            });
+
+            //Act
+            var cost = new DeliveryCostsCalculation();
+            var order = cost.CalculateOrderCost(parcels, true);
+            //Assert
+            Assert.AreEqual(11, order.TotalCost);
+            Assert.AreEqual(22, order.TotalCostWithSpeedyShipping);
+        }
     }
+
 }

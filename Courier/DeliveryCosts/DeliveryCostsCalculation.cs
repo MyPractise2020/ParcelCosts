@@ -16,7 +16,7 @@ namespace DeliveryCosts
         /// <param name="parcels">The parcels to be delivered</param>
         /// <returns>order information as required, 
         /// i.e. individual parcel cost, parcel type and total cost of all the parcels in the order</returns>
-        public Order CalculateOrderCost(List<Parcel> parcels)
+        public Order CalculateOrderCost(List<Parcel> parcels, bool isSpeedyShipping = false)
         {
             var order = new Order();
             order.ParcelList = new List<Parcel>();
@@ -26,6 +26,8 @@ namespace DeliveryCosts
                 order.ParcelList.Add(targetParcel);
                 order.TotalCost += targetParcel.Cost;
             }
+            if (isSpeedyShipping)
+                order.TotalCostWithSpeedyShipping = order.TotalCost * 2;
             return order;
         }
 
