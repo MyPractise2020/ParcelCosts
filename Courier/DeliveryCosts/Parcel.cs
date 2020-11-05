@@ -16,5 +16,7 @@ namespace DeliveryCosts
 
         public decimal Cost { get; set; }
 
+        public ParcelSize Type { get; set; }
+
     }
 }
