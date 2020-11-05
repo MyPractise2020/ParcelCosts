@@ -18,7 +18,15 @@ namespace DeliveryCosts
         /// i.e. individual parcel cost, parcel type and total cost of all the parcels in the order</returns>
         public Order CalculateOrderCost(List<Parcel> parcels)
         {
-            throw new NotFiniteNumberException();
+            var order = new Order();
+            order.ParcelList = new List<Parcel>();
+            foreach (var parcel in parcels)
+            {
+                var targetParcel = CalculateDeliveryCostByParcelSize(parcel);
+                order.ParcelList.Add(targetParcel);
+                order.TotalCost += targetParcel.Cost;
+            }
+            return order;
         }
 
         /// <summary>
