@@ -14,6 +14,9 @@ namespace DeliveryCosts
         public const decimal largeParcelWeightLimit = 6;
         public const decimal xLParcelWeightLimit = 10;
         public const decimal overChargePerKg = 2;
+        public const decimal overWeightParcelCost = 50;
+        public const decimal overWeightParcelWeightLimit = 50;
+        public const decimal overWeightParcelExcessCharge = 1;
 
         /// <summary>
         /// This is the data to be presented to the end user
@@ -43,6 +46,13 @@ namespace DeliveryCosts
         /// <returns>The parcel information including cost and type</returns>
         public Parcel CalculateDeliveryCostByParcelSize(Parcel parcel)
         {
+            if(parcel.IsOverweight)
+            {
+                parcel.Cost = overWeightParcelCost;
+                if (parcel.Weight > 50)
+                    parcel.Cost += overWeightParcelExcessCharge * (parcel.Weight - overWeightParcelWeightLimit);
+            }
+
             if (parcel.Length >= largeParcelDimentionLimit ||
                 parcel.Width >= largeParcelDimentionLimit ||
                 parcel.Height >= largeParcelDimentionLimit)

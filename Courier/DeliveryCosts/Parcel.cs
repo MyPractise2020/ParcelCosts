@@ -20,5 +20,7 @@ namespace DeliveryCosts
 
         public decimal Weight { get; set; }
 
+        public bool IsOverweight { get; set; }
+
     }
 }
