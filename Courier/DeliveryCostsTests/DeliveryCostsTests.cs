@@ -1,7 +1,7 @@
 using DeliveryCosts;
 using NUnit.Framework;
 using System.Collections.Generic;
-
+using System.ComponentModel;
 
 namespace DeliveryCostsTests
 {
@@ -114,6 +114,8 @@ namespace DeliveryCostsTests
             Assert.AreEqual(11, order.TotalCost);
         }
 
+        //to Do add parcel type check and more edge cases
+
         [Test]
         public void CalculateOrderCostTestWithSpeedyShippingTest()
         {
@@ -139,6 +141,32 @@ namespace DeliveryCostsTests
             Assert.AreEqual(11, order.TotalCost);
             Assert.AreEqual(22, order.TotalCostWithSpeedyShipping);
         }
+
+        //add more edge cases
+
+        [Test]
+        public void CalculateOverWeightParcelForSmallSize()
+        {
+            //Arrange
+            List<Parcel> parcels = new List<Parcel>();
+            parcels.Add(new Parcel
+            {
+                Height = 6,
+                Length = 7,
+                Width = 9,
+                Weight = 11
+            });
+
+            //Act
+            var cost = new DeliveryCostsCalculation();
+            var order = cost.CalculateOrderCost(parcels, true);
+            //Assert
+            Assert.AreEqual(23, order.TotalCost);
+        }
+
+        
+        //To Do add test for XL, large , medium size  parcels
+       
     }
 
 }

@@ -6,10 +6,15 @@ namespace DeliveryCosts
 {
     public class DeliveryCostsCalculation
     {
-        public const int smallParcelDimentionLimit = 10;
-        public const int mediumParcelDimentionLimit = 50;
-        public const int largeParcelDimentionLimit = 100;
-        
+        public const decimal smallParcelDimentionLimit = 10;
+        public const decimal mediumParcelDimentionLimit = 50;
+        public const decimal largeParcelDimentionLimit = 100;
+        public const decimal smallParcelWeightLimit = 1;
+        public const decimal mediumParcelWeightLimit = 3;
+        public const decimal largeParcelWeightLimit = 6;
+        public const decimal xLParcelWeightLimit = 10;
+        public const decimal overChargePerKg = 2;
+
         /// <summary>
         /// This is the data to be presented to the end user
         /// </summary>
@@ -44,6 +49,8 @@ namespace DeliveryCosts
             {
                 parcel.Cost = 25;
                 parcel.Type = ParcelSize.XLarge;
+                if (parcel.Weight > xLParcelWeightLimit)
+                    parcel.Cost += overChargePerKg * (parcel.Weight - xLParcelWeightLimit);                
             }
 
             else if(parcel.Length >= mediumParcelDimentionLimit && parcel.Length < largeParcelDimentionLimit &&
@@ -52,6 +59,8 @@ namespace DeliveryCosts
             {
                 parcel.Cost = 15;
                 parcel.Type = ParcelSize.Large;
+                if (parcel.Weight > largeParcelWeightLimit)
+                    parcel.Cost += overChargePerKg * (parcel.Weight - largeParcelWeightLimit);
             }
 
             else if (parcel.Length >= smallParcelDimentionLimit && parcel.Length < mediumParcelDimentionLimit &&
@@ -60,11 +69,15 @@ namespace DeliveryCosts
             {
                 parcel.Cost = 8;
                 parcel.Type = ParcelSize.Medium;
+                if (parcel.Weight > mediumParcelWeightLimit)
+                    parcel.Cost += overChargePerKg * (parcel.Weight - mediumParcelWeightLimit);
             }
             else
             {
                 parcel.Cost = 3;
                 parcel.Type = ParcelSize.Small;
+                if (parcel.Weight > smallParcelWeightLimit)
+                    parcel.Cost += overChargePerKg * (parcel.Weight - smallParcelWeightLimit);
             }
 
             return parcel;
